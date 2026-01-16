@@ -7,7 +7,7 @@ Use this file to track team progress each week. Update it daily to see who's on 
 
 | Team Member | Mon | Tue | Wed | Thu | Fri | Status |
 |------------|-----|-----|-----|-----|-----|--------|
-| Jordan     | ⬜  | ⬜  | ⬜  | ⬜  | ⬜  | Pending |
+| Jordan     | 🟡  | ⬜  | ⬜  | ⬜  | ⬜  | Pending |
 | Francis    | ⬜  | ⬜  | ⬜  | ⬜  | ⬜  | Pending |
 | Anthony    | ⬜  | ⬜  | ⬜  | ⬜  | ⬜  | Pending |
 
