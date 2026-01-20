@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List App</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .todo-container {
+            background: #fff;
+            width: 350px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 5px;
+        }
+
+        input {
+            flex: 1;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        ul {
+            margin-top: 15px;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #e9ecef;
+            padding: 8px;
+            margin-bottom: 6px;
+            border-radius: 4px;
+        }
+
+        li.completed span {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .actions button {
+            margin-left: 5px;
+            padding: 4px 6px;
+            font-size: 12px;
+        }
+
+        .delete {
+            background: #dc3545;
+        }
+
+        .delete:hover {
+            background: #b02a37;
+        }
+
+        .complete {
+            background: #28a745;
+        }
+
+        .complete:hover {
+            background: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+
+<div class="todo-container">
+    <h1>To-Do List</h1>
+
+    <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Enter a task">
+        <button onclick="addTask()">Add</button>
+    </div>
+
+    <ul id="taskList"></ul>
+</div>
+
+<script>
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    function saveTasks() {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    function renderTasks() {
+        const list = document.getElementById("taskList");
+        list.innerHTML = "";
+
+        tasks.forEach((task, index) => {
+            const li = document.createElement("li");
+            li.className = task.completed ? "completed" : "";
+
+            const span = document.createElement("span");
+            span.textContent = task.text;
+
+            const actions = document.createElement("div");
+            actions.className = "actions";
+
+            const completeBtn = document.createElement("button");
+            completeBtn.textContent = "✔";
+            completeBtn.className = "complete";
+            completeBtn.onclick = () => toggleComplete(index);
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "✖";
+            deleteBtn.className = "delete";
+            deleteBtn.onclick = () => deleteTask(index);
+
+            actions.appendChild(completeBtn);
+            actions.appendChild(deleteBtn);
+
+            li.appendChild(span);
+            li.appendChild(actions);
+
+            list.appendChild(li);
+        });
+    }
+
+    function addTask() {
+        const input = document.getElementById("taskInput");
+        const text = input.value.trim();
+
+        if (text === "") {
+            alert("Please enter a task");
+            return;
+        }
+
+        tasks.push({ text: text, completed: false });
+        input.value = "";
+        saveTasks();
+        renderTasks();
+    }
+
+    function toggleComplete(index) {
+        tasks[index].completed = !tasks[index].completed;
+        saveTasks();
+        renderTasks();
+    }
+
+    function deleteTask(index) {
+        tasks.splice(index, 1);
+        saveTasks();
+        renderTasks();
+    }
+
+    renderTasks();
+</script>
+
+</body>
+</html>
